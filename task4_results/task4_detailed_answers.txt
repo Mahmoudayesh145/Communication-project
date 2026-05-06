@@ -1,0 +1,22 @@
+
+TASK 4 ADVANCED DISCUSSION
+
+Question (a): Coherent detection works perfectly for both AM types. It recovers the 
+original message signal without the 180-degree phase issues seen in envelope detectors.
+
+Question (b): Quality Comparison
+The Coherent Detector provides superior quality. While the envelope detector's quality 
+depends heavily on the RC time constant (cutoff frequency), the coherent detector 
+isolates the baseband message mathematically, leading to much lower distortion.
+
+Question (c): Advantages
+1. Works for DSB-SC (saving transmitter power).
+2. Works for overmodulated signals (mu > 1).
+3. Better SNR performance in noisy conditions.
+
+Question (d): Implementation Challenge (Synchronization)
+The receiver must generate a local carrier cos(wc*t + phi). If phi is not zero, the 
+output amplitude is reduced by cos(phi). If the frequency is slightly off, the 
+signal will "beat" and fade. 
+Solution: To fix this, engineers use a Phase-Locked Loop (PLL) or a Costas Loop 
+to "lock" onto the incoming carrier frequency and phase automatically.

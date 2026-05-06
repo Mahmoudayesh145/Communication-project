@@ -1,0 +1,19 @@
+
+TASK 3 DISCUSSION ANSWERS
+
+Question (b): Cutoff Frequency Observations
+- Too Low (1 kHz): The recovered signal is very smooth but "laggy" and misses high-frequency details. 
+- Too High (50 kHz): The carrier ripples are still clearly visible in the output; it's noisy.
+- Just Right (15 kHz): The output follows the message envelope accurately with minimal noise.
+
+Question (c): Applying Envelope Detector to DSB-SC
+Output: The output looks like the absolute value of the original message (|m(t)|) rather than m(t).
+Why it doesn't work: DSB-SC has no carrier to "lift" the message above zero. When the message 
+crosses zero, the envelope detector (which is a peak tracker) just sees it as a positive peak 
+again, losing the original sign (phase) of the message.
+
+Question (d): Advantages and Limitations
+Advantage: Extremely simple and cheap to build (needs only a diode, resistor, and capacitor). 
+No complex synchronization or local carrier generation is needed at the receiver.
+Limitation: Very inefficient in terms of power (requires a large carrier). It also fails 
+completely if mu > 1 (overmodulation) or if used on DSB-SC.

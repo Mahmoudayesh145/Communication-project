@@ -1,0 +1,21 @@
+
+TASK 4 DISCUSSION ANSWERS
+
+Question (a): Does coherent detection work for both?
+Answer: Yes. Coherent detection works perfectly for both DSB-LC and DSB-SC. 
+Unlike the envelope detector, it recovers the sign (phase) of the message correctly.
+
+Question (b): Which has better quality?
+Answer: Coherent detection has better quality. The envelope detector introduces 
+small "ripples" from the carrier and can have diagonal clipping, whereas the 
+coherent detector mathematically recovers the exact message signal after filtering.
+
+Question (c): Main advantage of coherent detection?
+Answer: The main advantage is that it can demodulate DSB-SC signals (which are 
+power-efficient) and it works regardless of the modulation index (no distortion if mu > 1).
+
+Question (d): Main disadvantage (implementation challenge)?
+Answer: The implementation challenge is **Phase and Frequency Synchronization**. 
+The receiver must generate a local carrier that is exactly matched to the 
+incoming carrier. If there is a small frequency or phase error, the output will 
+experience "fading" or severe distortion.

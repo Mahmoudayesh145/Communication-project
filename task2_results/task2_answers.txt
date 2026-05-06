@@ -1,0 +1,12 @@
+
+TASK 2 DISCUSSION ANSWERS
+Question (c): When mu > 1, the envelope crosses the zero axis and becomes negative. 
+This is a problem because simple Envelope Detectors only track the absolute peaks 
+of the carrier, meaning they will "rectify" the negative part of the envelope, 
+causing severe non-linear distortion.
+
+Question (d): Optimal mu = 1.0. 
+This is the "sweet spot" where you get the highest possible power efficiency 
+for standard AM without introducing distortion. 
+Increasing mu beyond 1.0 adds slightly more efficiency but makes the signal 
+unreadable by simple receivers.
