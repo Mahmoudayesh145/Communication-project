@@ -1,6 +1,18 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
+
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams.update({
+    'figure.dpi': 140,
+    'savefig.dpi': 140,
+    'font.size': 10,
+    'axes.titlesize': 13,
+    'axes.labelsize': 11,
+    'legend.fontsize': 9,
+})
 
 # --- Settings ---
 fs = 100000       # 100 kHz sampling
@@ -61,46 +73,35 @@ with open(os.path.join(output_dir, 'detailed_efficiency_table.txt'), 'w') as f:
 # 4. Detailed Plotting (Question a and b)
 # Question (a): Efficiency Plot
 plt.figure(figsize=(10, 6))
-plt.plot(mu_values, efficiencies, 'o-', color='blue', linewidth=2, markersize=8)
+plt.plot(mu_values, efficiencies, 'o-', color='#1f77b4', linewidth=2.4, markersize=8)
+for mu, eta in zip(mu_values, efficiencies):
+    plt.annotate(f'{eta:.1f}%', (mu, eta), textcoords='offset points', xytext=(0, 8), ha='center')
 plt.title("Modulation Index vs. Power Efficiency", fontsize=14)
 plt.xlabel("Modulation Index (mu)", fontsize=12)
 plt.ylabel("Power Efficiency (%)", fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.7)
+plt.ylim(0, max(efficiencies) * 1.18)
+plt.grid(True, linestyle='--', alpha=0.4)
+plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'efficiency_vs_mu.png'))
 plt.close()
 
 # Question (b): Multi-Waveform Comparison
-plt.figure(figsize=(12, 10))
+plt.figure(figsize=(13, 10))
 test_mu = [0.5, 1.0, 1.2]
+colors = ['#1f77b4', '#2ca02c', '#d62728']
 for i, mu in enumerate(test_mu):
     plt.subplot(3, 1, i+1)
-    plt.plot(t * 1000, modulated_signals[mu], label=f'Modulated (mu={mu})')
-    # Plot Envelope
-    plt.plot(t * 1000, (1 + mu * message), 'r--', alpha=0.7, label='Envelope')
-    plt.title(f"Time Domain: mu = {mu}" + (" (OVERMODULATION)" if mu > 1 else ""))
+    plt.plot(t * 1000, modulated_signals[mu], label=f'Modulated signal', color=colors[i], linewidth=1.5)
+    plt.plot(t * 1000, (1 + mu * message), 'k--', alpha=0.85, label='Envelope')
+    plt.plot(t * 1000, -(1 + mu * message), 'k--', alpha=0.45)
+    plt.title(f"Time Domain: $\mu = {mu}$" + (" (overmodulation)" if mu > 1 else ""))
     plt.ylabel("Amplitude")
     plt.legend(loc='upper right')
-    plt.grid(True)
+    plt.grid(True, linestyle='--', alpha=0.4)
 plt.xlabel("Time (ms)")
+plt.tight_layout()
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'overmodulation_comparison.png'))
 plt.close()
-
-# 5. Written Answers
-answers = """
-TASK 2 DISCUSSION ANSWERS
-Question (c): When mu > 1, the envelope crosses the zero axis and becomes negative. 
-This is a problem because simple Envelope Detectors only track the absolute peaks 
-of the carrier, meaning they will "rectify" the negative part of the envelope, 
-causing severe non-linear distortion.
-
-Question (d): Optimal mu = 1.0. 
-This is the "sweet spot" where you get the highest possible power efficiency 
-for standard AM without introducing distortion. 
-Increasing mu beyond 1.0 adds slightly more efficiency but makes the signal 
-unreadable by simple receivers.
-"""
-with open(os.path.join(output_dir, 'task2_answers.txt'), 'w') as f:
-    f.write(answers)
 
 print(f"\nTask 2 finished. All detailed results saved in '{output_dir}'.")

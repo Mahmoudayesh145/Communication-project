@@ -1,19 +1,50 @@
+TASK 3: ENVELOPE DETECTOR DESIGN - ANSWERS
 
-TASK 3 DISCUSSION ANSWERS
+Question (a): Plot Demodulated Output vs. Original Message Signal
+The recovery_comparison_lc.png plot shows the original bandlimited message overlaid with the recovered 
+signal from the envelope detector applied to DSB-LC.
+Key observations:
+- The recovered signal closely follows the original message signal
+- Small ripples and noise are present due to imperfect filtering and carrier leakage
+- The envelope detector successfully recovers the message because DSB-LC has the carrier component
+- Amplitude normalization is applied for visual comparison (the recovered signal magnitude varies based on modulation depth)
 
-Question (b): Cutoff Frequency Observations
-- Too Low (1 kHz): The recovered signal is very smooth but "laggy" and misses high-frequency details. 
-- Too High (50 kHz): The carrier ripples are still clearly visible in the output; it's noisy.
-- Just Right (15 kHz): The output follows the message envelope accurately with minimal noise.
+Question (b): Lowpass Filter Cutoff Frequency Effects
+Three experiments show the effect of filter cutoff frequency:
 
-Question (c): Applying Envelope Detector to DSB-SC
-Output: The output looks like the absolute value of the original message (|m(t)|) rather than m(t).
-Why it doesn't work: DSB-SC has no carrier to "lift" the message above zero. When the message 
-crosses zero, the envelope detector (which is a peak tracker) just sees it as a positive peak 
-again, losing the original sign (phase) of the message.
+1. Too Low (1 kHz cutoff):
+   - The recovered signal is heavily smoothed and loses all high-frequency message content
+   - cannot track fast changes in the message
 
-Question (d): Advantages and Limitations
-Advantage: Extremely simple and cheap to build (needs only a diode, resistor, and capacitor). 
-No complex synchronization or local carrier generation is needed at the receiver.
-Limitation: Very inefficient in terms of power (requires a large carrier). It also fails 
-completely if mu > 1 (overmodulation) or if used on DSB-SC.
+2. Too High (50 kHz cutoff):
+   - The carrier ripples and high-frequency noise pass through the filter
+   - The output is very noisy with visible oscillations at carrier frequency (15 kHz)
+   - The signal is recovered but with unacceptable noise 
+
+3. Just Right (15 kHz cutoff):
+   - The filter removes the carrier while preserving message content
+   - The output is clean with minimal ripple and noise
+   - This is the optimal tradeoff between noise reduction and signal fidelity
+
+Principle: The cutoff should be slightly above the highest message frequency to prevent aliasing 
+and loss of information, while being well below the carrier frequency to attenuate carrier ripples.
+
+Question (c): Envelope Detector Applied to DSB-SC - Why It Fails
+When the envelope detector is applied to DSB-SC (suppressed carrier), the output is incorrect.
+
+Why it fails:
+1. When m(t) is negative, the modulated signal just reverses polarity (phase modulation)
+2. The envelope detector only tracks positive peaks (or absolute peaks in a rectifier)
+3. Therefore, it recovers |m(t)| instead of m(t), losing negative values 
+
+Question (d): Advantages and Limitations of Envelope Detection
+
+Advantages:
+1. Simplicity: Requires only (passive components) 
+2. Low complexity: No need for coherent demodulation, synchronization, or local oscillator generation
+
+Limitations:
+1. Power Inefficiency: DSB-LC wastes a lot of power in the carrier component
+2. Fails on overmodulation: Breaks down completely if μ > 1 (envelope goes negative)
+3. Cannot demodulate general DSB-SC or SSB signals
+

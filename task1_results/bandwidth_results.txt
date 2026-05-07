@@ -2,7 +2,7 @@
 --- Bandwidth Comparison Table ---
 Modulation Type      | 99% BW (kHz)   
 ----------------------------------------
-DSB-SC               | 0.93           
-DSB-LC (mu=0.5)      | 0.37           
-DSB-LC (mu=0.8)      | 0.45           
-DSB-LC (mu=1.0)      | 0.57           
+DSB-SC               | 1.30           
+DSB-LC (mu=0.5)      | 1.30           
+DSB-LC (mu=0.8)      | 1.30           
+DSB-LC (mu=1.0)      | 1.30           

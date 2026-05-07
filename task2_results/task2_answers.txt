@@ -1,12 +1,29 @@
+TASK 2: MODULATION INDEX EFFECTS - ANSWERS
 
-TASK 2 DISCUSSION ANSWERS
+Question (a): Modulation Index vs. Power Efficiency
+The plot shows the relationship between modulation index (mu) and power efficiency (eta).
+Power efficiency increases monotonically with mu according to the formula: eta = (mu^2 * Pm_norm) / (1 + mu^2 * Pm_norm).
+For mu = 0.3: eta = 2.20%
+For mu = 0.5: eta = 5.88%
+For mu = 0.8: eta = 13.79%
+For mu = 1.0: eta = 20.00%
+For mu = 1.2: eta = 26.47%
+
+Question (b): Time-Domain Waveforms for mu = 0.5, 1.0, and 1.2
+The comparison figure shows three subplots:
+- mu = 0.5 (under-modulation): The envelope stays positive and bounded between 0 and 2, clean modulation.
+- mu = 1.0 (critical modulation): The envelope reaches exactly 0 at its minimum without crossing. Maximum efficiency without distortion.
+- mu = 1.2 (over-modulation): The envelope becomes negative (crosses zero), causing the carrier to lose its reference amplitude.
+The red dashed line in each subplot represents the envelope (1 + mu*m(t)), which visually shows the distortion.
+
 Question (c): When mu > 1, the envelope crosses the zero axis and becomes negative. 
 This is a problem because simple Envelope Detectors only track the absolute peaks 
 of the carrier, meaning they will "rectify" the negative part of the envelope, 
 causing severe non-linear distortion.
 
-Question (d): Optimal mu = 1.0. 
-This is the "sweet spot" where you get the highest possible power efficiency 
-for standard AM without introducing distortion. 
-Increasing mu beyond 1.0 adds slightly more efficiency but makes the signal 
-unreadable by simple receivers.
+Question (d): What is the Optimal Modulation Index and Why?
+The optimal modulation index is mu = 1.0, achieving 20% power efficiency.
+Rationale:
+1. Power Efficiency: Higher mu increases efficiency (mu = 1.2 gives 26.47%), but this comes at the cost of distortion.
+2. Distortion-Free Reception: mu = 1.0 is the critical point where the envelope reaches zero but does not go negative.
+3. Envelope Detector Compatibility: Standard AM receivers rely on simple envelope detectors, which fail for mu > 1.
