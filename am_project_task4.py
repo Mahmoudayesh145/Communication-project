@@ -16,7 +16,7 @@ plt.rcParams.update({
     'legend.fontsize': 9,
 })
 
-# --- Functions ---
+# Helper Functions
 def lowpass_filter(signal, cutoff, sample_rate):
     nyq = 0.5 * sample_rate
     normal_cutoff = min(cutoff / nyq, 0.99)
@@ -50,7 +50,7 @@ def save_wav_file(file_name, signal, sample_rate):
     int16_signal = np.int16(clipped * 32767)
     wavfile.write(os.path.join(output_dir, file_name), sample_rate, int16_signal)
 
-# --- Setup ---
+# Setup
 output_dir = 'task4_results'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -82,7 +82,7 @@ t_window_ms = (t[start_sample:end_sample] - t[start_sample]) * 1000
 # Save reference audio for comparison and listening.
 message_audio = data
 
-# --- STEP 1: Multiplication (Mixing) ---
+# STEP 1: Multiplication (Mixing)
 coherent_carrier = 2 * np.cos(2 * np.pi * fc * t)
 mixed_lc = dsb_lc * coherent_carrier
 mixed_sc = dsb_sc * coherent_carrier
@@ -101,7 +101,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'spectrum_after_mixing.png'))
 plt.close()
 
-# --- STEP 2: Filtering ---
+# STEP 2: Filtering
 recovered_lc_raw = lowpass_filter(mixed_lc, 4000, fs)
 recovered_sc_raw = lowpass_filter(mixed_sc, 4000, fs)
 
@@ -116,7 +116,7 @@ save_wav_file('demodulated_dsb_lc_coherent.wav', normalize_for_display(recovered
 save_wav_file('demodulated_dsb_sc_coherent.wav', normalize_for_display(recovered_sc_audio), fs_orig)
 save_wav_file('original_message_reference.wav', normalize_for_display(message_audio), fs_orig)
 
-# --- Detailed Visualization (Individual Files) ---
+# Detailed Visualization (Individual Files)
 zoom = end_sample - start_sample
 
 # Plot DSB-LC Result
