@@ -1,8 +1,8 @@
 
 --- Detailed Modulation Analysis ---
-Modulation Type      | 99% BW (kHz)    | Efficiency (%) 
--------------------------------------------------------
-DSB-SC               | 1.30            | 100.00         
-DSB-LC (mu=0.5)      | 1.30            | 51.43          
-DSB-LC (mu=0.8)      | 1.30            | 53.41          
-DSB-LC (mu=1.0)      | 1.30            | 55.09          
+Modulation Type           | 99% BW (kHz)    | Efficiency (%) 
+------------------------------------------------------------
+DSB-SC                    | 1.30            | 100.00         
+DSB-LC (mu=0.5)           | 1.30            | 51.43          
+DSB-LC (mu=0.8)           | 1.30            | 53.41          
+DSB-LC (mu=1.0)           | 1.30            | 55.10          
