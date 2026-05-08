@@ -1,0 +1,1 @@
+A comprehensive Python-based implementation and analysis of **Amplitude Modulation (AM)** techniques. This project explores the mathematical foundations, implementation details, and performance characteristics of various AM strategies used in radio communication.
