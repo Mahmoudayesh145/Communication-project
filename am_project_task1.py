@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import os
 
-# --- Configuration ---
+# Setup
 file_path = 'van_wiese-bass-wiggle-297877.wav'
 output_dir = 'task1_results'
 if not os.path.exists(output_dir):
@@ -22,7 +22,7 @@ plt.rcParams.update({
     'legend.fontsize': 9,
 })
 
-# --- Functions ---
+# Helper Functions 
 
 def bandlimit_filter(signal, cutoff_freq, sample_rate, order=5):
     nyquist = 0.5 * sample_rate
@@ -87,9 +87,9 @@ def save_spectrum_comparison(all_signals, sample_rate, center_frequency, output_
     fig.savefig(output_path)
     plt.close(fig)
 
-# --- Main Execution ---
+# Main Code
 
-# 1. Load and Normalize Audio
+# Load the input file and then and Normalize it to avoid overmodulation
 fs, data = wavfile.read(file_path)
 if len(data.shape) > 1:
     data = data[:, 0]  
@@ -97,12 +97,12 @@ data = data.astype(float) / np.max(np.abs(data))
 duration = len(data) / fs
 print(f"File loaded: {duration:.2f} seconds, Sample Rate: {fs} Hz")
 
-# 2. Filtering
+# Filtering
 filtered_audio = bandlimit_filter(data, 4000, fs)
 message_bandwidth_hz = estimate_99_power_bandwidth(filtered_audio, fs)
 transmitted_bandwidth_hz = 2 * message_bandwidth_hz
 
-# 3. Modulation Setup
+# Modulation Setup
 t = np.arange(len(data)) / fs
 fc = 15000 
 carrier = np.cos(2 * np.pi * fc * t)
@@ -122,7 +122,7 @@ for mu in mu_values:
     all_signals[f'DSB-LC (mu={mu})'] = (Ac + filtered_audio) * carrier
     print(f"For mu={mu}, Carrier Amplitude Ac={Ac:.4f}")
 
-# 4. Visualization and Bandwidth Analysis
+# Visualization and Bandwidth Analysis
 results_bw = {}
 zoom_duration = 0.05
 zoom_samples = int(zoom_duration * fs)
@@ -142,10 +142,10 @@ for name, signal in all_signals.items():
     bw = estimate_99_power_bandwidth(signal, fs)
     results_bw[name] = bw
     
-    # --- Combined Spectrum Plot (Linear and dB) ---
+    # Combined Spectrum Plot (Linear and dB)
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
     
-    # 1. Linear Plot (Zoomed)
+    # Linear Plot (Zoomed)
     ax1.plot(f_pos / 1000, mag_pos, color='#1f77b4', linewidth=1.6)
     ax1.set_title(f"Frequency Spectrum (Linear): {name}\n99% Power BW: {bw/1000:.2f} kHz")
     ax1.set_xlabel("Frequency (kHz)")
@@ -165,7 +165,7 @@ for name, signal in all_signals.items():
 
     ax1.grid(True, linestyle='--', alpha=0.4)
 
-    # 2. dB Plot
+    # dB Plot
     mag_db = 20 * np.log10(mag_pos + 1e-9)
     ax2.plot(f_pos / 1000, mag_db, color='#d62728', linewidth=1.4)
     ax2.set_title(f"Frequency Spectrum (dB): {name}")
@@ -190,14 +190,14 @@ for name, signal in all_signals.items():
     plt.savefig(os.path.join(output_dir, f"{name.replace('=', '_').replace(' ', '_')}_TimeDomain.png"))
     plt.close()
 
-# --- Generate Final Comparison Plots ---
-# 1. Linear Scale (Zoomed on sidebands)
+# Generate Final Comparison Plots
+# Linear Scale (Zoomed on sidebands)
 save_spectrum_comparison(all_signals, fs, fc, os.path.join(output_dir, 'spectrum_comparison.png'), use_db=False)
 
-# 2. dB Scale
+# dB Scale
 save_spectrum_comparison(all_signals, fs, fc, os.path.join(output_dir, 'spectrum_comparison_db.png'), use_db=True)
 
-# 5. Analysis Table
+# Analysis Table
 results_data = []
 for name, signal in all_signals.items():
     n = len(signal)

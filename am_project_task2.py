@@ -14,7 +14,7 @@ plt.rcParams.update({
     'legend.fontsize': 9,
 })
 
-# --- Settings ---
+# Settings
 fs = 100000       # 100 kHz sampling
 fc = 10000       # 10 kHz carrier
 duration = 0.1   # 100ms
@@ -24,14 +24,14 @@ output_dir = 'task2_results'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-# 1. Create Multitone Message Signal (m(t))
+# Create Multitone Message Signal (m(t))
 # Message is the sum of two sinusoids: m(t) = cos(2pi*f1*t) + cos(2pi*f2*t)
 f1, f2 = 500, 1500
 message_raw = np.cos(2 * np.pi * f1 * t) + np.cos(2 * np.pi * f2 * t)
 # Normalize message so max amplitude is exactly 1.0
 message = message_raw / np.max(np.abs(message_raw))
 
-# 2. Modulation and Power Analysis
+# Modulation and Power Analysis
 mu_values = [0.3, 0.5, 0.8, 1.0, 1.2]
 efficiencies = []
 pm_values = [] # Message Power (Pm)
@@ -59,7 +59,7 @@ for mu in mu_values:
     
     print(f"mu = {mu:<5} | Pm = {Pm:.4f} | Efficiency = {eta:.2f}%")
 
-# 3. Create Detailed Results Table
+# Create Detailed Results Table
 table_content = "\n--- Task 2: Detailed Modulation Results ---\n"
 table_content += f"{'Modulation Index (mu)':<25} | {'Message Power (Pm)':<20} | {'Efficiency (eta)':<15}\n"
 table_content += "-" * 65 + "\n"
@@ -70,7 +70,7 @@ print(table_content)
 with open(os.path.join(output_dir, 'detailed_efficiency_table.txt'), 'w') as f:
     f.write(table_content)
 
-# 4. Detailed Plotting (Question a and b)
+# Detailed Plotting (Question a and b)
 # Question (a): Efficiency Plot
 plt.figure(figsize=(10, 6))
 plt.plot(mu_values, efficiencies, 'o-', color='#1f77b4', linewidth=2.4, markersize=8)

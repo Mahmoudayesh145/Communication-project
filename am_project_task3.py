@@ -16,7 +16,7 @@ plt.rcParams.update({
     'legend.fontsize': 9,
 })
 
-# --- Setup ---
+# Setup
 output_dir = 'task3_results'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -30,6 +30,8 @@ data = data.astype(float) / np.max(np.abs(data))
 fs = 100000
 num_samples = int(len(data) * fs / fs_orig)
 data_resampled = resample(data, num_samples)
+
+# Helper Functions 
 
 def lowpass_filter(signal, cutoff, sample_rate):
     nyq = 0.5 * sample_rate
@@ -52,6 +54,8 @@ def normalize_for_display(signal):
         return signal
     return signal / max_value
 
+# Main Code
+
 # Message Preparation
 message = lowpass_filter(data_resampled, 4000, fs)
 t = np.arange(len(message)) / fs
@@ -67,11 +71,11 @@ dsb_sc = message * carrier
 start_sample, end_sample = find_representative_window(message, fs, window_seconds=0.004)
 window_t = t[start_sample:end_sample] * 1000
 
-# --- STEP 1: Rectification ---
+# STEP 1: Rectification
 rect_lc = np.abs(dsb_lc)
 rect_sc = np.abs(dsb_sc)
 
-# --- STEP 2: Lowpass Filter Experiment (Question b) ---
+# STEP 2: Lowpass Filter Experiment (Question b)
 cutoffs = [1000, 15000, 50000]
 filtered_results = {f: lowpass_filter(rect_lc, f, fs) for f in cutoffs}
 
@@ -100,7 +104,7 @@ fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig(os.path.join(output_dir, 'cutoff_experiment.png'))
 plt.close(fig)
 
-# --- STEP 3: DC Removal and Comparison (Question a) ---
+# STEP 3: DC Removal and Comparison (Question a)
 # We use the 15kHz result (Just Right)
 demod_raw = filtered_results[15000]
 recovered_lc = demod_raw - np.mean(demod_raw)
@@ -125,7 +129,7 @@ fig.tight_layout()
 plt.savefig(os.path.join(output_dir, 'recovery_comparison_lc.png'))
 plt.close(fig)
 
-# --- Question (c): Envelope Detector on DSB-SC ---
+# Question (c): Envelope Detector on DSB-SC
 # Rectify and filter DSB-SC
 demod_sc_raw = lowpass_filter(rect_sc, 15000, fs)
 recovered_sc = demod_sc_raw - np.mean(demod_sc_raw)
