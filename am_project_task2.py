@@ -94,7 +94,7 @@ for i, mu in enumerate(test_mu):
     plt.plot(t * 1000, modulated_signals[mu], label=f'Modulated signal', color=colors[i], linewidth=1.5)
     plt.plot(t * 1000, (1 + mu * message), 'k--', alpha=0.85, label='Envelope')
     plt.plot(t * 1000, -(1 + mu * message), 'k--', alpha=0.45)
-    plt.title(f"Time Domain: $\mu = {mu}$" + (" (overmodulation)" if mu > 1 else ""))
+    plt.title(fr"Time Domain: $\mu = {mu}$" + (" (overmodulation)" if mu > 1 else ""))
     plt.ylabel("Amplitude")
     plt.legend(loc='upper right')
     plt.grid(True, linestyle='--', alpha=0.4)

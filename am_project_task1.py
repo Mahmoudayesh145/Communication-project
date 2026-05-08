@@ -139,7 +139,7 @@ for name, signal in all_signals.items():
     f_pos = freqs[mask]
     mag_pos = np.abs(fft_vals[mask])
     
-    bw = transmitted_bandwidth_hz
+    bw = estimate_99_power_bandwidth(signal, fs)
     results_bw[name] = bw
     
     # --- Combined Spectrum Plot (Linear and dB) ---
@@ -207,13 +207,14 @@ for name, signal in all_signals.items():
     
     freqs = np.fft.fftfreq(n, 1/fs)
     fc_idx = np.argmin(np.abs(np.abs(freqs) - fc))
-    carrier_power = np.sum(mag[fc_idx-2:fc_idx+3]**2) if 'LC' in name else 0
+    # Sum power near +fc and -fc. Since it's symmetric, we can just double the +fc power.
+    carrier_power = 2 * np.sum(mag[fc_idx-2:fc_idx+3]**2) if 'LC' in name else 0
     sideband_power = total_power - carrier_power
-    efficiency = (sideband_power / total_power) * 100
+    efficiency = max(0, (sideband_power / total_power)) * 100
     
     results_data.append({
         'name': name,
-        'bw': transmitted_bandwidth_hz / 1000,
+        'bw': results_bw[name] / 1000,
         'efficiency': efficiency,
         'total_p': total_power
     })

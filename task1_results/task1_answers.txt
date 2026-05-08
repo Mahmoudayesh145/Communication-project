@@ -4,10 +4,10 @@ a) Bandwidth comparison table
 
 Modulation Type      | 99% BW (kHz)    | Efficiency (%) 
 -------------------------------------------------------
-DSB-SC               | 1.30            | 100.00         
-DSB-LC (mu=0.5)      | 1.30            | 51.43          
-DSB-LC (mu=0.8)      | 1.30            | 53.41          
-DSB-LC (mu=1.0)      | 1.30            | 55.10          
+DSB-SC               | 0.93            | 100.00         
+DSB-LC (mu=0.5)      | 0.37            | 2.85           
+DSB-LC (mu=0.8)      | 0.45            | 6.81           
+DSB-LC (mu=1.0)      | 0.57            | 10.19          
   
 
 b) DSB-LC requires a carrier because conventional AM uses the carrier as the reference that enables simple envelope detection at the receiver. DSB-SC removes the carrier to save power, so it does not carry information by itself and must be demodulated coherently with a synchronized local oscillator.
